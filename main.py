@@ -18,14 +18,20 @@ def check_dupes(train, test):
     return counter
 
 def main():
-    datasets = ['poi']
+    datasets = ['camel', 'jedit', 'lucene', 'poi', 'synapse', 'xalan', 'xerces']
     for ds in datasets:
         logging.info("Analysing dataset:\t{}".format(ds))
         train = get_df(ds, 'train')
         test = get_df(ds, 'test')
 
-        print(check_dupes(train, test))
-        print(len(test))
+        n_dupes = check_dupes(train, test)
+        n_test = len(test)
+
+        print("Checking dataset:\t\t\t\t\t{}".format(ds))
+        print("Overlapping buggy files between training and test set:\t{}".format(n_dupes))
+        print("Number of buggy files in test set:\t\t\t{}".format(n_test))
+        print("Ratio:\t\t\t\t\t\t\t{0:.2f}".format(n_dupes/n_test))
+        print()
 
 if __name__ == '__main__':
     logging.basicConfig(filename='logs.log',level=logging.DEBUG, format='%(asctime)s %(message)s', filemode='w')
